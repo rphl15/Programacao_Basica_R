@@ -17,3 +17,4 @@ Consolidar os conhecimentos iniciais em programação utilizando R, com aplicaç
 ## Tecnologias utilizadas:
 - R
 - RStudio
+- VsCode
