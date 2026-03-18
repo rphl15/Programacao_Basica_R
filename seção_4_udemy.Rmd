@@ -1,0 +1,62 @@
+
+*Exercício 1*
+
+```{r}
+ana = 8L
+paulo = 12L
+class(ana)
+class(paulo)
+if (paulo > ana){
+  print("O menino é mais velho")
+}else
+  {
+  print("A menina é mais velha")
+}
+```
+
+*Exercício 2*
+
+```{r}
+class(BOD)
+```
+
+*Exercício 3*
+
+```{r}
+vetor = c(1,2,3,4,5,6,7,8,9,10)
+for (i in vetor){
+  if (vetor[i]%%2==0)
+    print(vetor[i])
+}
+```
+
+*Exercício 4*
+
+```{r}
+tail(women, n=10)
+```
+
+*Exercício 5*
+
+```{r}
+iris2 = iris[50:100, c(2,3)]
+plot(iris2)
+```
+
+*Exercício 6*
+
+```{r}
+vetor1 = c(1,2,3,4)
+vetor2 = c(4,3,2,1)
+soma = vetor1 + vetor2
+print(soma)
+```
+
+*Exercício 7*
+
+```{r}
+dim(CO2)
+colnames(CO2)
+rownames(CO2)
+```
+
