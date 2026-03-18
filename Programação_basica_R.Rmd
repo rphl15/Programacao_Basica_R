@@ -1,0 +1,130 @@
+
+*Importando Dados*
+
+```{r}
+#Carreega o arquivo CSV para o R, a função file.choose() abrirá uma janela para selecionar o arquivo desejado
+df <- read.csv(file.choose())
+```
+
+*Carregando bibliotecas*
+
+```{r}
+library(ggplot2)
+library(dplyr)
+```
+
+*Visuaizando os Dados*
+
+```{r}
+#Ver a tabela completa
+View(df)
+#Ver as primeiras linhas da tabela, n=10 seleciona as 10 primeiras linhas
+head(df, n=10)
+#Mostrar um resumo estatístico dos dados, como média, mediana, mínimo, máximo, etc.
+summary(df)
+#Mostrar a estrutura dos dados, incluindo os tipos de variáveis e o número de observações.
+str(df)
+#Mostrar o número de linhas e colunas do DataFrame
+dim(df)
+#Nomes de colunas
+colnames(df)
+```
+
+*Filtrando Dados*
+
+```{r}
+#Filtra os dados para mostrar apenas os registros onde o salário é maior que 4000 e menor que 7000, e a cidade é "Rio de Janeiro".
+df_salario <- df %>% filter(salario > 4000 & salario < 7000 & cidade == "Rio de Janeiro")
+#Mostra o DataFrame filtrado
+View(df_salario)
+head(df, n=10)
+summary(df_salario)
+```
+
+*If e Else*
+
+```{r}
+#Função If e Else
+n1 = 10
+n2 = 20
+if (n1 < n2)
+{  
+  print("Verdadeiro")
+}else
+{
+  print("Falso")
+  }
+```
+
+*ifelse*
+
+```{r}
+#Função Ifelse
+x = ifelse(n1 > 15, "Verdadeiro", "Falso")
+print(x)
+```
+
+*for*
+
+```{r}
+for (i in 2:12){
+  print(i)
+}
+```
+
+*while*
+
+```{r}
+a = 1
+while (a <= 10)
+{
+  print(a)
+  a = a + 0.01
+}
+```
+
+*function*
+
+```{r}
+parorimpar <- function (x) {
+  return(ifelse(x%%2==0, "Par", "Impar"))
+}
+parorimpar(5)
+parorimpar(12)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
