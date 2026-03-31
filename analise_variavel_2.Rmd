@@ -1,0 +1,44 @@
+
+```{r}
+# 1. Criando os dados
+fertilizante <- factor(rep(c(1,2,3), each = 5))
+
+rendimento <- c(50.1, 55.4, 52.3, 54.8, 53.2,
+                60.3, 58.7, 61.9, 59.4, 60.8,
+                65.5, 67.1, 66.2, 68.4, 67.3)
+
+dados <- data.frame(fertilizante, rendimento)
+
+# Visualizar os dados
+print(dados)
+```
+
+
+```{r}
+modelo <- aov(rendimento ~ fertilizante, data = dados)
+summary(modelo)
+```
+
+
+```{r}
+tukey <- TukeyHSD(modelo)
+print(tukey)
+```
+```{r}
+# Normalidade dos resíduos
+shapiro.test(residuals(modelo))
+# Homogeneidade das variâncias
+bartlett.test(rendimento ~ fertilizante, data = dados)
+
+```
+```{r}
+boxplot(rendimento ~ fertilizante,
+        col = c("lightblue", "lightgreen", "lightpink"),
+        main = "Rendimento por Fertilizante",
+        xlab = "Fertilizante",
+        ylab = "Rendimento (kg)")
+```
+```{r}
+aggregate(rendimento ~ fertilizante, data = dados, mean)
+```
+
