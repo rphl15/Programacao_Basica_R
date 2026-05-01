@@ -4,6 +4,8 @@ library(tidyverse)
 
 
 ```{r}
+install.packages("dados")
+install.packages("ggthemes")
 library(dados)
 library(ggthemes)
 ```
@@ -123,8 +125,55 @@ ggplot(
 ```
 
 
+
+```{r}
+# Execício 4 - O que acontece se você fizer um gráfico de dispersão de especie em função de profundidade_bico? Qual seria uma melhor escolha de geometria (geom)?
+ggplot(
+  data = pinguins,
+  mapping = aes(x = profundidade_bico, y = especie)
+)+
+  geom_jitter(width = 0.2)+
+  geom_smooth()
+```
+
+
+```{r}
+ggplot(
+  data = pinguins,
+  mapping = aes(x = especie, y = profundidade_bico)
+  
+)+
+  geom_point()
+```
+
+
+```{r}
+ggplot(
+  data = pinguins,
+  mapping = aes(x = massa_corporal ,y = comprimento_bico)
+)+
+  geom_point(na.rm = TRUE)+
+  geom_smooth()+
+  labs(
+    title = "Comparação entre Massa Corporal e Comprimento do bico",
+    subtitle = "Medidas retiradas em 2017",
+    x = "Massa Corporal (g)",
+    y = "Comprimento do bico (m)",
+    color = "Espécie",
+    shape = "Espécie"
+)
+```
+
+
+```{r}
+glimpse(pinguins)
+```
+
+
 ```{r}
 ```
+
+
 ```{r}
 ```
 
