@@ -1,0 +1,61 @@
+```{r}
+# Carregando os pacotes que serão usados
+library(pacman)
+pacman::p_load(dplyr, ggplot2, car, rstatix, lmtest, ggpubr)
+```
+
+
+```{r}
+# Carregandos os arquivos
+dados <- read.csv2("C:/Users/raphael.eugenio/Desktop/Raphael/Outros/Banco de Dados 11.csv")
+View(dados)
+glimpse(dados)
+```
+
+
+```{r}
+# Relação linear entre a VD e VI:
+plot(dados$Publicidade, dados$Vendas)
+```
+
+
+```{r}
+# Construção do modelo
+mod <- lm(Vendas ~ Publicidade, dados)
+```
+
+
+```{r}
+# Analise Grafica:
+par(mfrow=c(2,2))
+plot(mod)
+
+```
+
+
+```{r}
+par(mfrow=c(1,1))
+```
+
+
+```{r}
+# Normalidade de resíduos:
+shapiro.test(mod$residuals)
+```
+
+
+```{r}
+# Independência dos resíduos (Durbin-Watson):
+durbinWatsonTest(mod)
+```
+
+
+```{r}
+#OutLiers nos residuos:
+summary(rstandard(mod))
+```
+
+
+```{r}
+```
+
