@@ -57,5 +57,64 @@ summary(rstandard(mod))
 
 
 ```{r}
+# Homecedasticidade (Breusch-Pagan):
+bptest(mod)
+```
+
+```{r}
+summary(mod)
+```
+
+
+```{r}
+# Gráfico de Dispersão - incluindo a equação
+
+ggplot(data = dados, mapping = aes(x = Publicidade, y = Vendas))+
+  geom_point() +
+  geom_smooth(method = "lm", col ="red")+
+  stat_regline_equation(aes(label = paste(..eq.label.., ..adj.rr.label..,
+                                          sep = "*plain(\",\")~~")),
+                        label.x = 0, label.y = 400)+
+  theme_classic()
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
 ```
 
