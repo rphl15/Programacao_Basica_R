@@ -1,0 +1,295 @@
+```{r}
+###### Análise Explorátoria
+
+# Importando Bibliotecas
+library(dplyr)
+library(readxl)
+library(readr)
+library(tidyr)
+library(psych)
+library(scales)
+library(ggplot2)
+```
+
+```{r}
+df <- read_excel("G:/Drives compartilhados/Qualidade/TEMPORÁRIOS/ANALISE EXPLORATORIA - IDOSOS/(IGNORAR) arquivo_alterado_idoso.xlsx", 
+  sheet = 1,
+  col_names = TRUE
+)
+View(df)
+```
+
+```{r}
+lista <- c("Hospital",
+"Sexo",
+"Cirurgia recente (Últimos 12 meses)",
+"Comorbidades (Índice geriátrico de comorbidades) [Doença cardiaca isquêmica ou estrutural (valvopatias, CIA, CIV)]",
+"Comorbidades (Índice geriátrico de comorbidades) [Arritmia]",
+"Comorbidades (Índice geriátrico de comorbidades) [Outras cardiopatias (cardiomiopatia, miocardite, cor pulmonare)]",
+"Comorbidades (Índice geriátrico de comorbidades) [Hipertensão arterial sistêmica]",
+"Comorbidades (Índice geriátrico de comorbidades) [AVC]",
+"Comorbidades (Índice geriátrico de comorbidades) [Doença vascular periférica]",
+"Comorbidades (Índice geriátrico de comorbidades) [Diabetes]",
+"Comorbidades (Índice geriátrico de comorbidades) [Anemia]",
+"Comorbidades (Índice geriátrico de comorbidades) [Doença gastrointestinal]",
+"Comorbidades (Índice geriátrico de comorbidades) [Doenças hepatobiliares]",
+"Comorbidades (Índice geriátrico de comorbidades) [Doença renal]",
+"Comorbidades (Índice geriátrico de comorbidades) [Doença respiratória]",
+"Comorbidades (Índice geriátrico de comorbidades) [Parkinsonismo ou outras doenças cerebrais não vasculares]",
+"Comorbidades (Índice geriátrico de comorbidades) [Doenças musculoesqueléticas]",
+"Comorbidades (Índice geriátrico de comorbidades) [Câncer]",
+"Nível de dependência na entrada",
+"Polifarmácia (uso de 5 ou mais medicações) ",
+"Uso de anticoagulante no pré-operatório",
+"Uso de antiagregante no pré-operatório",
+"Uso de IECA no pré-operatório",
+"Uso de BRA no pré-operatório",
+"Uso de betabloqueador no pré-operatório",
+"Uso de estatina no pré-operatório",
+"Ecocardiograma (180 dias antes da cirurgia)Disfunção segmentar:",
+"Ecocardiograma (180 dias antes da cirurgia)Disfunção valvar moderada ou severa, exceto estenose aórtica",
+"Ecocardiograma (180 dias antes da cirurgia)Estenose aórtica moderada ou severa",
+"Especialidade",
+"Tipo de cirurgia (abdominal; torácica)",
+"Caráter da cirurgia",
+"Diagnóstico que levou a cirurgia é um dos seguintes:",
+"Tipo de anestesia",
+"Tipo de anestesia geral",
+"Complicações Anestésicas",
+"Uso de coloide sintético no intraoperatório",
+"Uso de albumina no intraoperatório",
+"Complicações na RPA",
+"Dispositivos [Sonda vesical de demora]",
+"Dispositivos [Gastrostomia]",
+"Dispositivos [Sonda nasoenteral]",
+"Dispositivos [Traqueostomia]",
+"Dispositivos [Fralda]",
+"Dispositivos [Cadeira de rodas]",
+"Dispositivos [Andador]",
+"Dispositivos [Acamada]",
+"24 horas antes da cirurgia paciente estava",
+"Paciente sendo cuidado por equipe médica outra (incluindo terapia intensiva) além da cirúrgica ",
+"Realização de sessão de fisioterapia no pós operatório",
+"Reserva de UTI no pré-operatório",
+"Desenrolar da internação após a cirurgia",
+"Intubação após a cirurgia",
+"Transfusão",
+"Retorno da dieta via oral ou enteral no pós-operatório",
+"Dieta parenteral durante a internação",
+"Contenção durante a internação",
+"Reoperação durante a internação",
+"Procedimento de radiointervenção para tratamento de complicação durante a internação.",
+"Procedimento de endoscopia digestiva durante a internação para tratamento de complicações.",
+"Infecção do sítio cirúrgico",
+"Outras infecções durante a internação",
+"Complicações pós operatórias [Infarto do miocárdio]",
+"Complicações pós operatórias [Arritmia]",
+"Complicações pós operatórias [Edema Pulmonar]",
+"Complicações pós operatórias [Embolia Pulmonar]",
+"Complicações pós operatórias [Acidente Vascular Cerebral]",
+"Complicações pós operatórias [Hemorragia Gastrointestinal]",
+"Complicações pós operatórias [Lesão Renal Aguda sem necessidade de hemodiálise]",
+"Complicações pós operatórias [Lesão renal aguda com necessidade de hemodiálise]",
+"Complicações pós operatórias [Hemorragia pós-operatória]",
+"Complicações pós operatórias [Lesão pulmonar aguda]",
+"Complicações pós operatórias [Deiscência da anastomose]",
+"Complicações pós operatórias [Delirium]",
+"Complicações pós operatórias [Retenção urinária com necessidade de sondagem]",
+"Complicações pós operatórias [Fecaloma, ou constipação com necessidade de tratamento (clister, lavagem, quebra digital)]",
+"Complicações pós operatórias [Queda]",
+"Complicações pós operatórias [Lesão por pressão]",
+"Abertura de pelo menos um código amarelo durante a internação",
+"Incluído em protocolo assistencial (sepse, dor torácica, acidente vascular cerebral)",
+"Cateter venoso central durante a internação (não apenas durante a cirurgia).",
+"Uso de droga vasoativa durante a internação",
+"Uso de monitorização de pressão arterial invasiva durante a internação.",
+"Uso de monitorização de débito cardiaco durante a internação",
+"Uso de monitorização de BIS no intraoperatório durante a internação.",
+"Uso de manta térmica no intraoperatório",
+"Uso de benzodiazepínicos como medicação pré-anestésica",
+"Uso de benzodiazepínicos no intraoperatório",
+"Uso de anti-inflamatórios no intraoperatório",
+"Paciente em uso de antibiótico terapêutico antes da cirurgia",
+"Uso de anti-inflamatórios nas primeiras 24 horas de pós-operatório",
+"Uso de naloxona na RPA ou nas primeiras 24 horas de pós-operatório",
+"Uso de flumazenil na RPA ou nas primeiras 24 horas de pós-operatório",
+"Parada cardíaca (se o paciente teve mais de uma PCR na internação, veja sempre a primeira)",
+"Momento da parada cardíaca ",
+"Risco de TEV descrito no Tasy antes da cirurgia",
+"Risco de TEV descrito no Tasy no primeiro dia de pós-operatório.",
+"Profilaxia de TEV",
+"Uso de insulina",
+"Uso de morfina após a saída da RPA",
+"Uso de oxicodona após a saída da RPA",
+"Houve instituição de cuidados paliativos durante a internação",
+"Houve instituição de cuidados proporcionais durante a internação (não IOT, não RCP) ",
+"Desfecho em 30 dias (olhar dia 30 da internação, ou última evolução).",
+"Desfecho final da internação independente da data em que ocorreu o desfecho.",
+"Nos pacientes que evoluíram a óbito:",
+"Nível de dependência na alta",
+"Reinternação em até 90 dias da data da primeira cirurgia.",
+"Desfecho da reinternação",
+"Ao final de 60 dias após a internação inicial paciente estava",
+"Ao final de 90 dias após a internação inicial paciente estava"
+)
+```
+
+```{r}
+normalize_names <- function(x){
+
+  # Remover acentuação
+  x <- iconv(x, from = "UTF-8", to = "ASCII//TRANSLIT")
+
+  # Converter para minúsculas
+  x <- tolower(x)
+
+  # Substituir espaços por underscores
+  x <- str_replace_all(x, " ", "_")
+
+  # Remover caracteres especiais
+  x <- gsub("[^a-z0-9_]", "", x)
+
+  # Substituir múltiplos underscores por um
+  x <- gsub("_+", "_", x)
+
+  # Remover underscores no início ou fim
+  x <- gsub("^_|_$", "", x)
+
+  # Remover números no início
+  x <- gsub("^[0-9]+_", "", x)
+
+  return(x)
+}
+
+lista_normalizada <- normalize_names(lista)
+```
+
+```{r}
+for (col in lista_normalizada){
+  print(col)
+}
+```
+
+
+```{r}
+library(stringr)
+normalize_column_names <- function(df){
+  # Remover acentuação
+  colnames(df) <- iconv(colnames(df), from = "UTF-8", to = "ASCII//TRANSLIT")
+  # Converter para minúsculas
+  colnames(df) <- tolower(colnames(df))
+  # Substituir espaços por underscores
+  colnames(df) <- str_replace_all(colnames(df), " ", "_")
+  # Remover caracteres especiais, mantendo apenas letras, números e underscores
+  colnames(df) <- gsub("[^a-z0-9_]", "", colnames(df))
+  # Substituir múltiplos underscores consecutivos por um único underscore
+  colnames(df) <- gsub("+", "", colnames(df))
+  # Remover underscores no início ou fim dos nomes de colunas
+  colnames(df) <- gsub("^|$", "", colnames(df))
+  # Remove números das colunas
+  colnames(df) <- gsub("^[0-9]+_", "", colnames(df))
+  return(df)
+}
+df = normalize_column_names(df)
+
+df$exa
+```
+
+```{r}
+df <- df %>%
+  mutate(across(
+    c(peso, altura),
+    as.numeric
+))
+```
+
+```{r}
+glimpse(df)
+```
+
+```{r}
+# Amplitude da variavel
+range(df$peso, na.rm = TRUE)
+# Quantidade de linhas para tabela de frequencia
+nclass.Sturges(df$peso)
+# Craindo a tabela de frequencia
+table(cut(df$peso, seq(0, 200, l = 13)))
+```
+
+```{r}
+summary(df$peso)
+```
+
+```{r}
+describe(df$peso)
+describeBy(df$peso, group = df$sexo)
+```
+
+```{r}
+tabela <- df %>% group_by(peso, sexo) %>% 
+  summarise(
+    média = mean(peso),
+    dp = sd(peso),
+    mediana = median(peso)
+)
+```
+
+```{r}
+df_chr <- df[, sapply(df, function(x) is.character(x) || is.factor(x))]
+str(df_chr)
+```
+
+```{r}
+x <- df_chr$complicacoes_pos_operatorias_hemorragia_posoperatoria
+# Removendo
+x <- x[x != "Nenhum"]
+prop.table(table(x))
+```
+
+```{r}
+grafico = function(df_chr, coluna){
+  x <- df_chr[[coluna]]
+  # Removendo
+  x <- x[!x %in% c("Nenhum", "Ausente", "Não se aplica", "Nenhum dos acima", "Não aplica")]
+  
+  dados <- as.data.frame(table(x))
+  
+  dados$Porcentagem <- prop.table(dados$Freq) * 100
+  
+  titulos <- setNames(lista, lista_normalizada)
+  
+  ggplot(dados, aes(x = x , y = Porcentagem)) +
+    geom_bar(stat = "identity", color = "black", fill = "#452103")+ # https://coolors.co/palettes/trending
+    geom_text(aes(label = percent(Porcentagem / 100, accuracy = 0.1)), vjust = -0.3, color = "black") +
+    scale_y_continuous(labels = percent_format(scale = 1))+
+    scale_x_discrete(labels = \(x) str_wrap(x, width = 20))+
+    labs(
+      title = titulos[coluna],
+      x = "",
+      y = "Porcentagem"
+  ) 
+}
+grafico(df_chr, 'hospital')
+```
+
+```{r}
+lista
+```
+
+
+```{r}
+dir.create("graficos", showWarnings = FALSE)
+
+for(col in lista_normalizada){
+
+  g <- grafico(df_chr, col)
+
+  ggsave(
+    filename = paste0("graficos/", col, ".png"),
+    plot = g,
+    width = 8,
+    height = 6,
+    dpi = 300
+  )
+}
+```
